@@ -1,13 +1,16 @@
 import numpy as np
 
-def check_params(S, K, r, q, T, sigma, M, N):
-    if S >= 2 * K or N == 0 or M == 0:
-        return False
 
-    return True
+import black_scholes_lib
+
+# Lesson - importing functions from other files
+# Lesson - assigning a function to a variable name
+checker = black_scholes_lib.check_params
 
 def blackScholes_cranknicolson(S,K,r,q,t,T,sigma,M,N):
-    if not check_params(S, K, r, q, T, sigma, M, N):
+
+    #Lesson - variable assigned function
+    if not checker(S, K, r, q, T, sigma, M, N):
         return None
 
     #initializing values Smax, deltaT and deltaS based on assumptions (S<2K)
@@ -25,18 +28,28 @@ def blackScholes_cranknicolson(S,K,r,q,t,T,sigma,M,N):
     
     
     # Creating constants alpha j, beta j and gamma j
-    def alphaj(j):
-        aj = 0.25 * deltaT * (sigma**2 * j**2 - (r-q) * j)
-        return aj 
-
-    def betaj(j):
-        bj = -0.5 * deltaT * (sigma**2 * j**2 + r)
-        return bj 
-
-    def gammaj(j):
-        gj = 0.25 * deltaT * (sigma**2 * j**2 + (r-q) * j)
-        return gj
     
+#     def alphaj(j):
+#         aj = 0.25 * deltaT * (sigma**2 * j**2 - (r-q) * j)
+#         return aj 
+    # Lesson - Lambda expressions
+    alphaj = lambda x: 0.25 * deltaT * (sigma**2 * j**2 - (r-q) * j)
+    
+    
+#     def betaj(j):
+#         bj = -0.5 * deltaT * (sigma**2 * j**2 + r)
+#         return bj 
+    
+    # Lesson - Lambda expressions
+    betaj = lambda x: -0.5 * deltaT * (sigma**2 * j**2 + r)
+
+#     def gammaj(j):
+#         gj = 0.25 * deltaT * (sigma**2 * j**2 + (r-q) * j)
+#         return gj
+    # Lesson - Lambda expressions
+    gammaj = lambda x: 0.25 * deltaT * (sigma**2 * j**2 + (r-q) * j)
+
+
     # Initialise matrix M2
     M2 = np.zeros((M+1,M+1))
     M2[0,0],M2[M,M] = 1,1
@@ -78,8 +91,10 @@ def blackScholes_cranknicolson(S,K,r,q,t,T,sigma,M,N):
         b_put = np.zeros((M+1,1))
         
 		#Populate bCall and bPut
+        # Lesson - Explicit joining
         b_call[0,0] = 0
-        b_call[M,0] = Smax*np.exp((-1*q)*(N-i)*(deltaT)) - K*np.exp((-1*r)*(N-i)*(deltaT)) # not sure if this is right should be Smax - K*np.exp((-1*r)*(N-i)*(deltaT) according to the formula sheet
+        b_call[M,0] = Smax*np.exp((-1*q)*(N-i)*(deltaT)) -   \
+                        K*np.exp((-1*r)*(N-i)*(deltaT)) # not sure if this is right should be Smax - K*np.exp((-1*r)*(N-i)*(deltaT) according to the formula sheet
         
         b_put[0,0] = K*np.exp((-1*r)*(N-i)*(deltaT))
         b_put[M,0] = 0
@@ -103,8 +118,13 @@ def blackScholes_cranknicolson(S,K,r,q,t,T,sigma,M,N):
     k = int(np.floor(S/deltaS))
     
     # Calculate Call option prices and put option prices
-    call_option_price = fCallOption[0,k] + ((fCallOption[0,k+1] - fCallOption[0,k])/deltaS)*(S - (k * deltaS))
-    put_option_price = fPutOption[0,k] + ((fPutOption[0,k+1] - fPutOption[0,k])/deltaS)*(S - (k * deltaS))
+
+    # Lesson - Explicit joining
+    call_option_price = fCallOption[0,k] + ((fCallOption[0,k+1] - \
+        fCallOption[0,k])/deltaS)*(S - (k * deltaS))
+
+    put_option_price = fPutOption[0,k] + ((fPutOption[0,k+1] - \
+        fPutOption[0,k])/deltaS)*(S - (k * deltaS))
     
     return call_option_price, put_option_price
 

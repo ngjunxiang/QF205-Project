@@ -4,11 +4,17 @@ import numpy as np
 # Input Parameters
 # S=Stock Price, K=Exercise Price, r=Interest Rate(%), q=Yiled Rate(%), t=0, T=Time to Maturity, sigma=Volatility(%), M=100, N=10_000
 
+import black_scholes_lib
+
+# Lesson - importing functions from other files
+# Lesson - assigning a function to a variable name
+checker = black_scholes_lib.check_params
 
 def black_scholes_explicit(S, K, r, q, T, sigma, M, N, t=0):
 
     # Check assumption
-    if not check_params(S, K, r, q, T, sigma, M, N):
+    #Lesson - variable assigned function
+    if not checker(S, K, r, q, T, sigma, M, N):
         return None
 
     # 1) Compute dt, ds
@@ -78,12 +84,6 @@ def black_scholes_explicit(S, K, r, q, T, sigma, M, N, t=0):
 
     return (Vc, Vp)
 
-
-def check_params(S, K, r, q, T, sigma, M, N):
-    if S >= 2 * K or N == 0 or M == 0:
-        return False
-
-    return True
 
 
 print(

@@ -1,9 +1,16 @@
 import numpy as np
 
+import black_scholes_lib
+
+# Lesson - importing functions from other files
+# Lesson - assigning a function to a variable name
+checker = black_scholes_lib.check_params
 
 def black_scholes_implicit(S, K, r, q, T, sigma, M, N, t=0):
     # Check assumption
-    if not check_params(S, K, r, q, T, sigma, M, N):
+
+    #Lesson - variable assigned function
+    if not checker(S, K, r, q, T, sigma, M, N):
         return None
 
     # Defining Values
@@ -75,9 +82,3 @@ def black_scholes_implicit(S, K, r, q, T, sigma, M, N, t=0):
     # Returning a tuple of call and put price
     return (Vc, Vp)
 
-
-def check_params(S, K, r, q, T, sigma, M, N):
-    if S > 2 * K or N == 0 or M == 0:
-        return False
-
-    return True

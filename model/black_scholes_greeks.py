@@ -17,10 +17,14 @@ def probability(S,K,r,q,t,T,sigma):
 # Compute call Option and put Option 
 def callPutOptionPrices(S,K,r,q,t,T,sigma):
       # get value of d1,d2 and expiry value
-    probability_list = probability(S,K,r,q,t,T,sigma) 
-    time_value = probability_list[0]
-    d1 = probability_list[1]
-    d2 = probability_list[2]
+
+    #Lesson - Multiple assignment of variables
+    #Lesson - Assigning variables straight to function returns
+    time_value,d1,d2 = probability(S,K,r,q,t,T,sigma) 
+
+    # time_value,d1,d2 = probability_list[0],probability_list[1],probability_list[2]
+    # d1 = probability_list[1]
+    # d2 = probability_list[2]
     c = (S*math.exp(-q*time_value)*n.cdf(d1)) - (K*math.exp(-r*time_value)*n.cdf(d2))
     p = (K*math.exp(-r*time_value)*n.cdf(-d2)) - (S*math.exp(-q*time_value)*n.cdf(-d1))
     return [c,p]
@@ -28,10 +32,15 @@ def callPutOptionPrices(S,K,r,q,t,T,sigma):
 # Compute delta
 def deltas(S,K,r,q,t,T,sigma):
      # get value of d1,d2 and expiry value
-    probability_list = probability(S,K,r,q,t,T,sigma) 
-    time_value = probability_list[0]
+
+    #Lesson - Multiple assignment of variables
+    #Lesson - Assigning variables straight to function returns
+    time_value,d1,d2 = probability(S,K,r,q,t,T,sigma) 
+
+
+    # time_value,d1 = probability_list[0],probability_list[1]
     # only retrieve d1 as d2 is not needed for delta calculation
-    d1 = probability_list[1]
+    # d1 = probability_list[1]
     #d2 = probability_list[2]
     
     deltaC = math.exp(-q*time_value)*n.cdf(d1)
@@ -43,32 +52,66 @@ def deltas(S,K,r,q,t,T,sigma):
     return [deltaC, deltaP, deltaC100, deltaP100]
 
 #compute lambdas
+
+## Aaron - If lambdas function is not used in the black scholes function below,
+##         can we just get rid of it?
+##         However there is a lesson point that is included in lambdas.
+
 def lambdas (S,K,r,q,t,T,sigma):
-    delta_output = deltas(S,K,r,q,t,T,sigma)
-    callPut_output = callPutOptionPrices(S,K,r,q,t,T,sigma)
-    lambdasC = delta_output[0] * S/callPut_output[0]
-    lambdasP = delta_output[1] * S/callPut_output[1]
+
+    #Lesson - "_" is used as a filler for unused variables
+    #Lesson - Multiple assignment of variables
+    #Lesson - Assigning variables straight to function returns
+    delta_output1, delta_output2 , _ , _ = deltas(S,K,r,q,t,T,sigma)
+    callPut_output1 , callPut_output2 = callPutOptionPrices(S,K,r,q,t,T,sigma)
+    lambdasC = delta_output1 * S/callPut_output1
+    lambdasP = delta_output2 * S/callPut_output2
+
+
+    # delta_output = deltas(S,K,r,q,t,T,sigma)
+    # callPut_output = callPutOptionPrices(S,K,r,q,t,T,sigma)
+    # lambdasC = delta_output[0] * S/callPut_output[0]
+    # lambdasP = delta_output[1] * S/callPut_output[1]
     return [lambdasC, lambdasP]
 
 
-def blackScholes(S,K,r,q,t,T,sigma): 
-    probability_list = probability(S,K,r,q,t,T,sigma) 
-    time_value = probability_list[0]
-    d1 = probability_list[1]
-    d2 = probability_list[2]
+def blackScholes(S,K,r,q,t,T,sigma):
+
+    #Lesson - Multiple assignment of variables
+    #Lesson - Assigning variables straight to function returns
+    time_value,d1,d2 = probability(S,K,r,q,t,T,sigma) 
+    # probability_list = probability(S,K,r,q,t,T,sigma) 
+    # time_value = probability_list[0]
+    # d1 = probability_list[1]
+    # d2 = probability_list[2]
     
-    callPut_output = callPutOptionPrices(S,K,r,q,t,T,sigma)
-    c = callPut_output[0]
-    p = callPut_output[1]
+
+
+    c,p = callPutOptionPrices(S,K,r,q,t,T,sigma)
+#     c = callPut_output[0]
+#     p = callPut_output[1]
     
-    delta_output = deltas(S,K,r,q,t,T,sigma)
-    deltaC = delta_output[0]
-    deltaP = delta_output[1]
+    deltaC,deltaP,_,_ = deltas(S,K,r,q,t,T,sigma)
+#     deltaC = delta_output[0]
+#     deltaP = delta_output[1]
     
     # lambda_output = lambdas (S,K,r,q,t,T,sigma)
     # lambdasC = lambda_output[0]
     # lambdasP = lambda_output[1]
     
+    # callPut_output = callPutOptionPrices(S,K,r,q,t,T,sigma)
+    # c = callPut_output[0]
+    # p = callPut_output[1]
+    
+    # delta_output = deltas(S,K,r,q,t,T,sigma)
+    # deltaC = delta_output[0]
+    # deltaP = delta_output[1]
+    
+    # lambda_output = lambdas (S,K,r,q,t,T,sigma)
+    # lambdasC = lambda_output[0]
+    # lambdasP = lambda_output[1]
+    
+
     gammaC = math.exp(-q*time_value) * ((n.pdf(d1))/(S*sigma*math.sqrt(time_value)))
     gammaP = gammaC
     
@@ -78,10 +121,14 @@ def blackScholes(S,K,r,q,t,T,sigma):
     rhoC = K*time_value*math.exp(-r*time_value) * n.cdf(d2)*0.01
     rhoP = -K*time_value*math.exp(-r*time_value) * n.cdf(-d2)*0.01
     
-    psiC = ((-S*time_value*math.exp(-q*time_value)*n.cdf(d1) - (S*math.sqrt(time_value)/sigma)*math.exp(-q*time_value)  
+    #Lesson - Implicit joining 
+
+    psiC = ((-S*time_value*math.exp(-q*time_value)*n.cdf(d1) - 
+        (S*math.sqrt(time_value)/sigma)*math.exp(-q*time_value)  
         * n.pdf(d1)+(K*math.sqrt(time_value)/sigma)*math.exp(-r*time_value) * n.pdf(d2)) * 0.01 )
 
-    psiP = ((S*time_value*math.exp(-q*time_value)*n.cdf(-d1) - (S*math.sqrt(time_value)/sigma)*math.exp(-q*time_value) 
+    psiP = ((S*time_value*math.exp(-q*time_value)*n.cdf(-d1) - 
+        (S*math.sqrt(time_value)/sigma)*math.exp(-q*time_value) 
         * n.pdf(-d1)+(K*math.sqrt(time_value)/sigma)*math.exp(-r*time_value) * n.pdf(-d2)) * 0.01 )
     
     SSc = (c-S*deltaC)/K
@@ -101,34 +148,67 @@ def blackScholes(S,K,r,q,t,T,sigma):
     
 # compute gamma1%, placed below blacksholes function as it's function not needed for the calculation
 def gamma1Percent(S,K,r,q,t,T,sigma):
-   
-    delta_output1 = deltas(S*1.01,K,r,q,t,T,sigma)
-    delta_output2 = deltas(S*0.99,K,r,q,t,T,sigma)
 
-    GammaC = (delta_output1[0]-delta_output2[0])/2
-    GammaP = (delta_output1[1]-delta_output2[1])/2
+
+
+    #Lesson - "_" is used as a filler for unused variables
+    #Lesson - Multiple assignment of variables
+    #Lesson - Assigning variables straight to function returns
+    delta_output1,delta_output2 , _ ,_ = deltas(S*1.01,K,r,q,t,T,sigma)
+    delta_koutput1,delta_koutput2 , _ , _ = deltas(S*0.99,K,r,q,t,T,sigma)
+
+    GammaC = (delta_output1-delta_koutput1)/2
+    GammaP = (delta_output2-delta_koutput2)/2
     
+
+#     delta_output1 = deltas(S*1.01,K,r,q,t,T,sigma)
+#     delta_output2 = deltas(S*0.99,K,r,q,t,T,sigma)
+
+#     GammaC = (delta_output1[0]-delta_output2[0])/2
+#     GammaP = (delta_output1[1]-delta_output2[1])/2
+    
+
     return(GammaC,GammaP)
 
 # compute theta1Day
 def theta1Day(S,K,r,q,t,T,sigma):
    
-    Vc1 = callPutOptionPrices(S,K,r,q,t+1/365,T,sigma)
-    Vc2 = callPutOptionPrices(S,K,r,q,t,T,sigma)
+
+    #Lesson - Multiple assignment of variables
+    #Lesson - Assigning variables straight to function returns
+    Vc1,Vc2 = callPutOptionPrices(S,K,r,q,t+1/365,T,sigma)
+    Vck1,Vck2 = callPutOptionPrices(S,K,r,q,t,T,sigma)
     
-    thetaC1 = Vc1[0]-Vc2[0]
-    thetaP1 = Vc1[1]-Vc2[1]
+    thetaC1 = Vc1-Vck1
+    thetaP1 = Vc2-Vck2
+   
+
+#     Vc1 = callPutOptionPrices(S,K,r,q,t+1/365,T,sigma)
+#     Vc2 = callPutOptionPrices(S,K,r,q,t,T,sigma)
+    
+#     thetaC1 = Vc1[0]-Vc2[0]
+#     thetaP1 = Vc1[1]-Vc2[1]
    
     return(thetaC1,thetaP1)
 
 # compute theta7Day
 def theta7Days(S,K,r,q,t,T,sigma):
     
-    callPut_output1 = callPutOptionPrices(S,K,r,q,t+7/365,T,sigma)
-    callPut_output2 = callPutOptionPrices(S,K,r,q,t,T,sigma)
+
+    #Lesson - Multiple assignment of variables
+    #Lesson - Assigning variables straight to function returns
+    callPut_output1,callPut_output2 = callPutOptionPrices(S,K,r,q,t+7/365,T,sigma)
+    callPut_outputk1,callPut_outputk2 = callPutOptionPrices(S,K,r,q,t,T,sigma)
     
-    thetaC7 = callPut_output1[0]-callPut_output2[0]
-    thetaP7 = callPut_output1[1]-callPut_output2[1]
+    thetaC7 = callPut_output1-callPut_outputk1
+    thetaP7 = callPut_output2-callPut_outputk2
+   
+
+    # callPut_output1 = callPutOptionPrices(S,K,r,q,t+7/365,T,sigma)
+    # callPut_output2 = callPutOptionPrices(S,K,r,q,t,T,sigma)
+    
+    # thetaC7 = callPut_output1[0]-callPut_output2[0]
+    # thetaP7 = callPut_output1[1]-callPut_output2[1]
    
     return(thetaC7,thetaP7)
     
