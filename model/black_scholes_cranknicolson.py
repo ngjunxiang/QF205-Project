@@ -5,6 +5,7 @@ import black_scholes_lib
 
 # Lesson - importing functions from other files
 # Lesson - assigning a function to a variable name
+# Lesson - Global variable
 checker = black_scholes_lib.check_params
 
 def blackScholes_cranknicolson(S,K,r,q,t,T,sigma,M,N):
