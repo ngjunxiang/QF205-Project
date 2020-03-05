@@ -74,13 +74,13 @@ def black_scholes_explicit(S, K, r, q, T, sigma, M, N, t=0):
         Vc = fc[0, k] + (fc[0, k + 1] - fc[0, k] / ds) * (S - K * ds)
         Vp = fp[0, k] + (fp[0, k + 1] - fp[0, k] / ds) * (S - K * ds)
 
-    print("Call:", Vc, "Put:", Vp)
+    # print("Call:", Vc, "Put:", Vp)
 
     return (Vc, Vp)
 
 
 def check_params(S, K, r, q, T, sigma, M, N):
-    if S > 2 * K or N == 0 or M == 0:
+    if S >= 2 * K or N == 0 or M == 0:
         return False
 
     return True

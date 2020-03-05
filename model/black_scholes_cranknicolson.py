@@ -1,6 +1,15 @@
 import numpy as np
 
+def check_params(S, K, r, q, T, sigma, M, N):
+    if S >= 2 * K or N == 0 or M == 0:
+        return False
+
+    return True
+
 def blackScholes_cranknicolson(S,K,r,q,t,T,sigma,M,N):
+    if not check_params(S, K, r, q, T, sigma, M, N):
+        return None
+
     #initializing values Smax, deltaT and deltaS based on assumptions (S<2K)
     Smax = 2*K
     deltaT = T/N

@@ -78,8 +78,11 @@ def blackScholes(S,K,r,q,t,T,sigma):
     rhoC = K*time_value*math.exp(-r*time_value) * n.cdf(d2)*0.01
     rhoP = -K*time_value*math.exp(-r*time_value) * n.cdf(-d2)*0.01
     
-    psiC = (-S*time_value*math.exp(-q*time_value)*n.cdf(d1) - (S*math.sqrt(time_value)/sigma)*math.exp(-q*time_value) * n.pdf(d1)+(K*math.sqrt(time_value)/sigma)*math.exp(-r*time_value) * n.pdf(d2)) * 0.01
-    psiP = (S*time_value*math.exp(-q*time_value)*n.cdf(-d1) - (S*math.sqrt(time_value)/sigma)*math.exp(-q*time_value) * n.pdf(-d1)+(K*math.sqrt(time_value)/sigma)*math.exp(-r*time_value) * n.pdf(-d2)) * 0.01
+    psiC = ((-S*time_value*math.exp(-q*time_value)*n.cdf(d1) - (S*math.sqrt(time_value)/sigma)*math.exp(-q*time_value)  
+        * n.pdf(d1)+(K*math.sqrt(time_value)/sigma)*math.exp(-r*time_value) * n.pdf(d2)) * 0.01 )
+
+    psiP = ((S*time_value*math.exp(-q*time_value)*n.cdf(-d1) - (S*math.sqrt(time_value)/sigma)*math.exp(-q*time_value) 
+        * n.pdf(-d1)+(K*math.sqrt(time_value)/sigma)*math.exp(-r*time_value) * n.pdf(-d2)) * 0.01 )
     
     SSc = (c-S*deltaC)/K
     SSp = (p-S*deltaP)/K
