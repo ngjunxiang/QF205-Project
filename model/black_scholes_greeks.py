@@ -59,11 +59,15 @@ def deltas(S,K,r,q,t,T,sigma):
 
 def lambdas (S,K,r,q,t,T,sigma):
 
+    #Lesson = Assigning tuple to function calling with *Args
+    args = (S,K,r,q,t,T,sigma)
+
     #Lesson - "_" is used as a filler for unused variables
     #Lesson - Multiple assignment of variables
     #Lesson - Assigning variables straight to function returns
-    delta_output1, delta_output2 , _ , _ = deltas(S,K,r,q,t,T,sigma)
-    callPut_output1 , callPut_output2 = callPutOptionPrices(S,K,r,q,t,T,sigma)
+    #Lesson - Assigning tuple to function calling with *Args
+    delta_output1, delta_output2 , _ , _ = deltas(*args)
+    callPut_output1 , callPut_output2 = callPutOptionPrices(*args)
     lambdasC = delta_output1 * S/callPut_output1
     lambdasP = delta_output2 * S/callPut_output2
 
@@ -77,9 +81,13 @@ def lambdas (S,K,r,q,t,T,sigma):
 
 def blackScholes(S,K,r,q,t,T,sigma):
 
+    #Lesson = Assigning tuple to function calling with *Args
+    args = (S,K,r,q,t,T,sigma)
+
     #Lesson - Multiple assignment of variables
     #Lesson - Assigning variables straight to function returns
-    time_value,d1,d2 = probability(S,K,r,q,t,T,sigma) 
+    #Lesson = Assigning tuple to function calling with *Args
+    time_value,d1,d2 = probability(*args) 
     # probability_list = probability(S,K,r,q,t,T,sigma) 
     # time_value = probability_list[0]
     # d1 = probability_list[1]
@@ -87,11 +95,11 @@ def blackScholes(S,K,r,q,t,T,sigma):
     
 
 
-    c,p = callPutOptionPrices(S,K,r,q,t,T,sigma)
+    c,p = callPutOptionPrices(*args)
 #     c = callPut_output[0]
 #     p = callPut_output[1]
     
-    deltaC,deltaP,_,_ = deltas(S,K,r,q,t,T,sigma)
+    deltaC,deltaP,_,_ = deltas(*args)
 #     deltaC = delta_output[0]
 #     deltaP = delta_output[1]
     
