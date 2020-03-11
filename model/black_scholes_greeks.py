@@ -212,12 +212,12 @@ def theta7Days(S,K,r,q,t,T,sigma):
    
     return(thetaC7,thetaP7)
     
-print(callPutOptionPrices(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
-print(deltas(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4)) 
-print(blackScholes(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
-print(gamma1Percent(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
-print(theta1Day(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
-print(theta7Days(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
+# print(callPutOptionPrices(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
+# print(deltas(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4)) 
+# print(blackScholes(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
+# print(gamma1Percent(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
+# print(theta1Day(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
+# print(theta7Days(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4))
 
    
     

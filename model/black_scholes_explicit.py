@@ -87,9 +87,9 @@ def black_scholes_explicit(S, K, r, q, T, sigma, M, N, t=0):
 
 
 
-print(
-    black_scholes_explicit(
-        S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183 / 365), sigma=0.4, M=100, N=10_000
-    )
-)
+# print(
+#     black_scholes_explicit(
+#         S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183 / 365), sigma=0.4, M=100, N=10_000
+#     )
+# )
 

@@ -94,7 +94,7 @@
      <string>Stock Price</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="model">
+   <widget class="QComboBox" name="getModel">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -113,7 +113,7 @@
     </item>
     <item>
      <property name="text">
-      <string>Black Scholes - Greek</string>
+      <string>Black Scholes - Greeks</string>
      </property>
     </item>
     <item>
