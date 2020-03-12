@@ -9,7 +9,8 @@ checker = black_scholes_lib.check_params
 
 def black_scholes_implicit(S, K, r, q, T, sigma, M, N, t=0):
     # Check assumption
-
+    print(M)   
+    print(N)
     #Lesson - variable assigned function
     if not checker(S, K, r, q, T, sigma, M, N):
         return None

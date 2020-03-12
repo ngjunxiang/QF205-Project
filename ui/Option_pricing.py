@@ -31,7 +31,7 @@ class Main(QMainWindow, Ui_MainWindow):
         elif cur_txt == 'Black Scholes - Explicit':
             self.calculate.clicked.connect(self.blackscholes_explicit)
         elif cur_txt == 'Black Scholes - Greeks':
-            self.calculate.clicked.connect(self.black_scholes_greeks)
+            self.calculate.clicked.connect(self.blackscholes_greeks)
         else:
             self.calculate.clicked.connect(self.blackscholes_cranknicolson)
 
@@ -51,16 +51,16 @@ class Main(QMainWindow, Ui_MainWindow):
         tau = daysDiff/365
         M = 100
         N = 100
-        
+     
         #Calling Black Scholes - Implicit Method -->
-        bs_i_result = bsi.black_scholes_implicit(S,K,r,q,0,tau,sigma,M,N)
+        bs_i_result = bsi.black_scholes_implicit(S,K,r,q,tau,sigma,M,N)
         
         # Printing onto UI
         theorecticalvalue_callString = str(round(bs_i_result[0],5)) #5 dp and convert to string
-        self.theorecticalvalue_call.setText(theorecticalvalue_callString)
+        self.theoreticalValue_Call.setText(theorecticalvalue_callString)
 
         theorecticalvalue_putString = str(round(bs_i_result[1],5)) #5 dp and convert to string
-        self.theorecticalvalue_put.setText(theorecticalvalue_putString)
+        self.theoreticalValue_Put.setText(theorecticalvalue_putString)
 
         
 
@@ -82,14 +82,32 @@ class Main(QMainWindow, Ui_MainWindow):
         N = 1000
         
         #Calling Black Scholes - Explicit Method -->
-        bs_e_result = bse.black_scholes_explicit(S,K,r,q,0,tau,sigma,M,N)
+        bs_e_result = bse.black_scholes_explicit(S,K,r,q,tau,sigma,M,N)
         
         # Printing onto UI
         theorecticalvalue_callString = str(round(bs_e_result[0],5)) #5 dp and convert to string
-        self.theorecticalvalue_call.setText(theorecticalvalue_callString)
+        self.theoreticalValue_Call.setText(theorecticalvalue_callString)
 
         theorecticalvalue_putString = str(round(bs_e_result[1],5)) #5 dp and convert to string
-        self.theorecticalvalue_put.setText(theorecticalvalue_putString)
+        self.theoreticalValue_Put.setText(theorecticalvalue_putString)
+
+
+    def blackscholes_greeks(self):
+        self.clearfield()
+        S = float(self.stockPrice.text())
+        K = float(self.exercisePrice.text())
+        sigma = float(self.volatility.text())/100
+        r = float(self.interestRate.text())/100
+        q = float(self.yieldRate.text())/100
+        dividendMethod = self.dividendMethod.text()
+        valDate = self.valueDate.date().toPyDate()
+        expDate = self.expirationDate.date().toPyDate()
+        daysDiff = float((expDate - valDate).days)
+        tau = daysDiff/365
+        M = 100
+        N = 1000
+
+        bs_g_result = bsg.black_scholes_greeks(S,K,r,q,tau,sigma,M,N)
 
 
     def blackscholes_cranknicolson(self):
@@ -109,14 +127,14 @@ class Main(QMainWindow, Ui_MainWindow):
         N = 1000
         
         #Calling Black Scholes - Explicit Method -->
-        bs_cn_result = bs.blackScholes_cranknicolson(S,K,r,q,0,tau,sigma,M,N)
+        bs_cn_result = bs.blackScholes_cranknicolson(S,K,r,q,tau,sigma,M,N)
         
         # Printing onto UI
         theorecticalvalue_callString = str(round(bs_cn_result[0],5)) #5 dp and convert to string
-        self.theorecticalvalue_call.setText(theorecticalvalue_callString)
+        self.theoreticalValue_Call.setText(theorecticalvalue_callString)
 
         theorecticalvalue_putString = str(round(bs_cn_result[1],5)) #5 dp and convert to string
-        self.theorecticalvalue_put.setText(theorecticalvalue_putString)
+        self.theoreticalValue_Put.setText(theorecticalvalue_putString)
 
 
     def clearfield(self):
