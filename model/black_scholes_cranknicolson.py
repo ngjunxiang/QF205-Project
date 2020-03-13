@@ -8,8 +8,8 @@ import black_scholes_lib
 # Lesson - Global variable
 checker = black_scholes_lib.check_params
 
-def blackScholes_cranknicolson(S,K,r,q,t,T,sigma,M,N):
-
+def blackScholes_cranknicolson(S, K, r, q, T, sigma, M, N, t=0):
+    
     #Lesson - variable assigned function
     if not checker(S, K, r, q, T, sigma, M, N):
         return None
@@ -127,7 +127,7 @@ def blackScholes_cranknicolson(S,K,r,q,t,T,sigma,M,N):
     put_option_price = fPutOption[0,k] + ((fPutOption[0,k+1] - \
         fPutOption[0,k])/deltaS)*(S - (k * deltaS))
     
-    return call_option_price, put_option_price
+    return (call_option_price, put_option_price)
 
 # print(blackScholes_cranknicolson(S=50.0, K=50.0, r=0.04, q=0.01, t=0, T=(183/365), sigma=0.4, M=100, N=10_000))
     
