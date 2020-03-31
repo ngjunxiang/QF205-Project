@@ -75,12 +75,12 @@ def black_scholes_explicit(S, K, r, q, T, sigma, M, N, t=0):
             fc[i][h] = Fic[h]
             fp[i][h] = Fip[h]
 
-        # 4) Find K
-        k = int(np.floor(S / ds))
+    # 4) Find K
+    k = int(np.floor(S / ds))
 
-        # 5) Option Price
-        Vc = fc[0][k] + (fc[0][k + 1] - fc[0][k] / ds) * (S - K * ds)
-        Vp = fp[0][k] + (fp[0][k + 1] - fp[0][k] / ds) * (S - K * ds)
+    # 5) Option Price
+    Vc = fc[0][k] + (fc[0][k + 1] - fc[0][k] / ds) * (S - K * ds)
+    Vp = fp[0][k] + (fp[0][k + 1] - fp[0][k] / ds) * (S - K * ds)
 
     # print("Call:", Vc, "Put:", Vp)
 
