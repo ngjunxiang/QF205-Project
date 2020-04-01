@@ -9,8 +9,8 @@ checker = black_scholes_lib.check_params
 
 def black_scholes_implicit(S, K, r, q, T, sigma, M, N, t=0):
     # Check assumption
-    print(M)   
-    print(N)
+    #print(M)   
+    #print(N)
     #Lesson - variable assigned function
     if not checker(S, K, r, q, T, sigma, M, N):
         return None
@@ -79,7 +79,7 @@ def black_scholes_implicit(S, K, r, q, T, sigma, M, N, t=0):
     Vc = fc[0, k] + (fc[0, k + 1] - fc[0, k]) / ds * (S - K * ds)
     Vp = fp[0, k] + (fp[0, k + 1] - fp[0, k]) / ds * (S - K * ds)
 
-    print('Call:', Vc, 'Put:', Vp)
+    #print('Call:', Vc, 'Put:', Vp)
 
     # Returning a tuple of call and put price
     return (Vc, Vp)
