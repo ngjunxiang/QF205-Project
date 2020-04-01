@@ -34,7 +34,7 @@ def blackScholes_cranknicolson(S, K, r, q, T, sigma, M, N, t=0):
 #         aj = 0.25 * deltaT * (sigma**2 * j**2 - (r-q) * j)
 #         return aj 
     # Lesson - Lambda expressions
-    alphaj = lambda x: 0.25 * deltaT * (sigma**2 * j**2 - (r-q) * j)
+    alphaj = lambda j: 0.25 * deltaT * (sigma**2 * j**2 - (r-q) * j)
     
     
 #     def betaj(j):
@@ -42,13 +42,13 @@ def blackScholes_cranknicolson(S, K, r, q, T, sigma, M, N, t=0):
 #         return bj 
     
     # Lesson - Lambda expressions
-    betaj = lambda x: -0.5 * deltaT * (sigma**2 * j**2 + r)
+    betaj = lambda j: -0.5 * deltaT * (sigma**2 * j**2 + r)
 
 #     def gammaj(j):
 #         gj = 0.25 * deltaT * (sigma**2 * j**2 + (r-q) * j)
 #         return gj
     # Lesson - Lambda expressions
-    gammaj = lambda x: 0.25 * deltaT * (sigma**2 * j**2 + (r-q) * j)
+    gammaj = lambda j: 0.25 * deltaT * (sigma**2 * j**2 + (r-q) * j)
 
 
     # Initialise matrix M2
