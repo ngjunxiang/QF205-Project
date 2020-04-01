@@ -21,8 +21,8 @@ def black_scholes_implicit(S, K, r, q, T, sigma, M, N, t=0):
     ds = S_max / M
 
     # Initialising put and call matrix
-    fc = [[0 for i in range(M + 1)] for j in range(N + 1)]
-    fp = [[0 for i in range(M + 1)] for j in range(N + 1)]
+    fc = np.zeros((N + 1, M + 1))
+    fp = np.zeros((N + 1, M + 1))
 
     # Inserting the default values for the put and call matrix
     for i in range(M + 1):
@@ -30,7 +30,7 @@ def black_scholes_implicit(S, K, r, q, T, sigma, M, N, t=0):
         fp[N, i] = max((K - (i * ds)), 0)
 
     # Initialising matrix A
-    matrix_A = [[0 for i in range(M + 1)] for j in range(M + 1)]
+    matrix_A = np.zeros((M + 1, M + 1))
     # Inserting inital values for Matrix A
     matrix_A[0, 0], matrix_A[M, M] = 1, 1
 
